@@ -35,10 +35,10 @@ const WhatsAppButton = () => (
     href={WHATSAPP_LINK} 
     target="_blank" 
     rel="noopener noreferrer"
-    className="whatsapp-float"
+    className="whatsapp-float p-3 md:p-4"
     aria-label="Contactez-nous sur WhatsApp"
   >
-    <MessageCircle size={32} fill="currentColor" />
+    <MessageCircle className="w-6 h-6 md:w-8 md:h-8" fill="currentColor" />
   </a>
 );
 
@@ -53,9 +53,9 @@ const Navbar = ({ onOpenCart, cartCount, onNavigate }: { onOpenCart: () => void,
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-3' : 'bg-transparent py-6'}`}>
+    <nav className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-3' : 'bg-transparent py-4 md:py-6'}`}>
       <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-        <button onClick={() => setIsMenuOpen(true)} className="md:hidden">
+        <button onClick={() => setIsMenuOpen(true)} className="md:hidden p-2 -ml-2">
           <Menu size={24} className={isScrolled ? 'text-black' : 'text-white'} />
         </button>
         
@@ -64,18 +64,18 @@ const Navbar = ({ onOpenCart, cartCount, onNavigate }: { onOpenCart: () => void,
           <button onClick={() => onNavigate('shop')} className={`uppercase text-xs tracking-widest hover:text-gold transition-colors ${isScrolled ? 'text-black' : 'text-white'}`}>Boutique</button>
         </div>
 
-        <button onClick={() => onNavigate('home')} className={`text-2xl font-serif tracking-tighter ${isScrolled ? 'text-black' : 'text-white'}`}>
+        <button onClick={() => onNavigate('home')} className={`text-xl md:text-2xl font-serif tracking-tighter ${isScrolled ? 'text-black' : 'text-white'}`}>
           MIMAS
         </button>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
           <button className={`hidden md:block ${isScrolled ? 'text-black' : 'text-white'}`}>
             <Search size={20} />
           </button>
-          <button onClick={onOpenCart} className={`relative ${isScrolled ? 'text-black' : 'text-white'}`}>
-            <ShoppingBag size={24} />
+          <button onClick={onOpenCart} className={`relative p-2 -mr-2 ${isScrolled ? 'text-black' : 'text-white'}`}>
+            <ShoppingBag size={22} md:size={24} />
             {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-gold text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">
+              <span className="absolute top-0 right-0 bg-gold text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
                 {cartCount}
               </span>
             )}
@@ -142,10 +142,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onSelec
           <span className="absolute top-4 left-4 bg-gold text-white text-[10px] uppercase tracking-widest px-3 py-1">Nouveau</span>
         )}
         
-        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 gap-2">
+        <div className="absolute inset-0 bg-black/20 opacity-0 md:group-hover:opacity-100 transition-opacity flex flex-col justify-end p-2 md:p-4 gap-2">
           <button 
             onClick={(e) => { e.stopPropagation(); onAddToCart(product); }}
-            className="w-full bg-white text-black py-3 text-xs uppercase tracking-widest font-bold hover:bg-gold hover:text-white transition-colors"
+            className="hidden md:block w-full bg-white text-black py-3 text-xs uppercase tracking-widest font-bold hover:bg-gold hover:text-white transition-colors"
           >
             Ajouter au panier
           </button>
@@ -154,20 +154,27 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onSelec
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="w-full bg-[#25D366] text-white py-3 text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 hover:bg-opacity-90 transition-colors"
+            className="hidden md:flex w-full bg-[#25D366] text-white py-3 text-xs uppercase tracking-widest font-bold items-center justify-center gap-2 hover:bg-opacity-90 transition-colors"
           >
             <MessageCircle size={16} /> WhatsApp
           </a>
         </div>
       </div>
-      <div className="mt-4 text-center">
-        <h3 className="text-sm uppercase tracking-wider font-medium">{product.name}</h3>
+      <div className="mt-3 md:mt-4 text-center">
+        <h3 className="text-[11px] md:text-sm uppercase tracking-wider font-medium line-clamp-1">{product.name}</h3>
         <div className="mt-1 flex justify-center gap-2 items-center">
-          <span className="text-gold font-bold">{product.price} DH</span>
+          <span className="text-gold font-bold text-sm md:text-base">{product.price} DH</span>
           {product.originalPrice && (
-            <span className="text-gray-400 line-through text-xs">{product.originalPrice} DH</span>
+            <span className="text-gray-400 line-through text-[10px] md:text-xs">{product.originalPrice} DH</span>
           )}
         </div>
+        {/* Mobile Action Button */}
+        <button 
+          onClick={(e) => { e.stopPropagation(); onAddToCart(product); }}
+          className="md:hidden mt-3 w-full border border-black py-2 text-[10px] uppercase tracking-widest font-bold"
+        >
+          + Panier
+        </button>
       </div>
     </motion.div>
   );
@@ -197,7 +204,7 @@ const CartDrawer = ({ isOpen, onClose, cart, updateQuantity, removeFromCart }: {
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            className="fixed right-0 top-0 h-full w-full max-w-md bg-white z-50 flex flex-col shadow-2xl"
+            className="fixed right-0 top-0 h-full w-full md:max-w-md bg-white z-50 flex flex-col shadow-2xl"
           >
             <div className="p-6 border-bottom flex justify-between items-center">
               <h2 className="text-xl font-serif uppercase tracking-widest">Votre Panier</h2>
@@ -279,38 +286,38 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }: { product: Prod
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto relative flex flex-col md:flex-row"
+              className="bg-white w-full max-w-4xl md:max-h-[90vh] overflow-y-auto relative flex flex-col md:flex-row h-full md:h-auto"
             >
-              <button onClick={onClose} className="absolute top-4 right-4 z-10 bg-white/50 rounded-full p-2 hover:bg-white transition-colors">
-                <X size={24} />
+              <button onClick={onClose} className="absolute top-4 right-4 z-10 bg-white/80 rounded-full p-2 hover:bg-white transition-colors shadow-sm">
+                <X size={20} md:size={24} />
               </button>
               
-              <div className="md:w-1/2 bg-gray-100">
+              <div className="w-full md:w-1/2 bg-gray-100 aspect-[4/5] md:aspect-auto">
                 <img src={product.image} alt={product.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
               </div>
 
-              <div className="md:w-1/2 p-8 md:p-12 flex flex-col">
-                <div className="flex gap-2 mb-4">
-                  {product.isBestSeller && <span className="bg-black text-white text-[10px] px-2 py-1 uppercase tracking-widest">Best Seller</span>}
-                  <span className="border border-gray-200 text-gray-500 text-[10px] px-2 py-1 uppercase tracking-widest">{product.category}</span>
+              <div className="w-full md:w-1/2 p-6 md:p-12 flex flex-col">
+                <div className="flex gap-2 mb-3 md:mb-4">
+                  {product.isBestSeller && <span className="bg-black text-white text-[9px] md:text-[10px] px-2 py-1 uppercase tracking-widest">Best Seller</span>}
+                  <span className="border border-gray-200 text-gray-500 text-[9px] md:text-[10px] px-2 py-1 uppercase tracking-widest">{product.category}</span>
                 </div>
                 
-                <h2 className="text-3xl font-serif mb-2">{product.name}</h2>
-                <div className="flex items-center gap-4 mb-6">
-                  <span className="text-2xl font-bold text-gold">{product.price} DH</span>
-                  {product.originalPrice && <span className="text-gray-400 line-through">{product.originalPrice} DH</span>}
+                <h2 className="text-2xl md:text-3xl font-serif mb-2">{product.name}</h2>
+                <div className="flex items-center gap-4 mb-4 md:mb-6">
+                  <span className="text-xl md:text-2xl font-bold text-gold">{product.price} DH</span>
+                  {product.originalPrice && <span className="text-gray-400 line-through text-sm md:text-base">{product.originalPrice} DH</span>}
                 </div>
 
-                <p className="text-gray-600 mb-8 leading-relaxed">
+                <p className="text-gray-600 mb-6 md:mb-8 text-sm md:text-base leading-relaxed">
                   {product.description}
                 </p>
 
-                <div className="space-y-4 mt-auto">
-                  <div className="flex items-center gap-2 text-xs text-red-500 font-bold uppercase tracking-widest mb-4">
-                    <Clock size={14} /> Stock Limité : plus que {product.stock} articles !
+                <div className="space-y-3 md:space-y-4 mt-auto">
+                  <div className="flex items-center gap-2 text-[10px] md:text-xs text-red-500 font-bold uppercase tracking-widest mb-2 md:mb-4">
+                    <Clock size={12} md:size={14} /> Stock Limité : plus que {product.stock} articles !
                   </div>
                   
-                  <button onClick={() => { onAddToCart(product); onClose(); }} className="w-full btn-gold">
+                  <button onClick={() => { onAddToCart(product); onClose(); }} className="w-full btn-gold py-4 text-xs">
                     Ajouter au panier
                   </button>
                   <a 
@@ -323,12 +330,12 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }: { product: Prod
                   </a>
                 </div>
 
-                <div className="mt-8 pt-8 border-t border-gray-100 grid grid-cols-2 gap-4">
-                  <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-gray-500">
-                    <Truck size={16} className="text-gold" /> Livraison Rapide
+                <div className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-gray-100 grid grid-cols-2 gap-4">
+                  <div className="flex items-center gap-2 text-[9px] md:text-[10px] uppercase tracking-widest text-gray-500">
+                    <Truck size={14} md:size={16} className="text-gold" /> Livraison Rapide
                   </div>
-                  <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-gray-500">
-                    <ShieldCheck size={16} className="text-gold" /> Paiement Sécurisé
+                  <div className="flex items-center gap-2 text-[9px] md:text-[10px] uppercase tracking-widest text-gray-500">
+                    <ShieldCheck size={14} md:size={16} className="text-gold" /> Paiement Sécurisé
                   </div>
                 </div>
               </div>
@@ -433,7 +440,7 @@ export default function App() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="text-5xl md:text-8xl font-serif mb-8 leading-tight"
+                  className="text-4xl md:text-8xl font-serif mb-6 md:mb-8 leading-tight"
                 >
                   Révélez votre <br /> <span className="italic text-gold">Élégance</span>
                 </motion.h1>
@@ -441,10 +448,10 @@ export default function App() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
-                  className="flex flex-col md:flex-row gap-4 justify-center"
+                  className="flex flex-col md:flex-row gap-3 md:gap-4 justify-center items-center"
                 >
-                  <button onClick={() => setCurrentPage('shop')} className="btn-gold">Acheter Maintenant</button>
-                  <button onClick={() => setCurrentPage('shop')} className="btn-outline border-white text-white hover:bg-white hover:text-black">Voir Nouveautés</button>
+                  <button onClick={() => setCurrentPage('shop')} className="btn-gold w-full md:w-auto">Acheter Maintenant</button>
+                  <button onClick={() => setCurrentPage('shop')} className="btn-outline border-white text-white hover:bg-white hover:text-black w-full md:w-auto">Voir Nouveautés</button>
                 </motion.div>
               </div>
               <motion.div 
@@ -457,17 +464,17 @@ export default function App() {
             </section>
 
             {/* Categories Grid */}
-            <section className="py-24 px-4 max-w-7xl mx-auto">
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-5xl font-serif mb-4">Nos Univers</h2>
-                <p className="text-gray-500 uppercase tracking-widest text-xs">Explorez nos collections exclusives</p>
+            <section className="py-16 md:py-24 px-4 max-w-7xl mx-auto">
+              <div className="text-center mb-12 md:mb-16">
+                <h2 className="text-3xl md:text-5xl font-serif mb-3 md:mb-4">Nos Univers</h2>
+                <p className="text-gray-500 uppercase tracking-widest text-[10px] md:text-xs">Explorez nos collections exclusives</p>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
                 {CATEGORIES.map((cat) => (
                   <div key={cat.id} className="relative aspect-[4/5] overflow-hidden group cursor-pointer" onClick={() => setCurrentPage('shop')}>
                     <img src={cat.image} alt={cat.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" referrerPolicy="no-referrer" />
                     <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                      <h3 className="text-white text-2xl font-serif tracking-widest uppercase">{cat.name}</h3>
+                      <h3 className="text-white text-lg md:text-2xl font-serif tracking-widest uppercase">{cat.name}</h3>
                     </div>
                   </div>
                 ))}
@@ -475,18 +482,18 @@ export default function App() {
             </section>
 
             {/* Best Sellers */}
-            <section className="py-24 bg-gray-50 px-4">
+            <section className="py-16 md:py-24 bg-gray-50 px-4">
               <div className="max-w-7xl mx-auto">
-                <div className="flex justify-between items-end mb-12">
+                <div className="flex justify-between items-end mb-10 md:mb-12">
                   <div>
                     <h2 className="text-3xl md:text-5xl font-serif mb-2">Best Sellers</h2>
-                    <p className="text-gray-500 uppercase tracking-widest text-xs">Les favoris de nos clientes</p>
+                    <p className="text-gray-500 uppercase tracking-widest text-[10px] md:text-xs">Les favoris de nos clientes</p>
                   </div>
-                  <button onClick={() => setCurrentPage('shop')} className="hidden md:flex items-center gap-2 text-xs uppercase tracking-widest font-bold hover:text-gold transition-colors">
-                    Tout voir <ArrowRight size={16} />
+                  <button onClick={() => setCurrentPage('shop')} className="flex items-center gap-2 text-[10px] md:text-xs uppercase tracking-widest font-bold hover:text-gold transition-colors">
+                    Tout voir <ArrowRight size={14} md:size={16} />
                   </button>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
                   {PRODUCTS.filter(p => p.isBestSeller).map(product => (
                     <ProductCard key={product.id} product={product} onAddToCart={addToCart} onSelect={(p) => setSelectedProduct(p)} />
                   ))}
@@ -495,28 +502,28 @@ export default function App() {
             </section>
 
             {/* Promo Banner */}
-            <section className="py-24 relative overflow-hidden">
+            <section className="py-16 md:py-24 relative overflow-hidden">
               <div className="absolute inset-0 z-0">
                 <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2000&auto=format&fit=crop" alt="Promo" className="w-full h-full object-cover brightness-50" referrerPolicy="no-referrer" />
               </div>
               <div className="relative z-10 max-w-7xl mx-auto px-4 text-center text-white">
-                <h2 className="text-4xl md:text-6xl font-serif mb-6 italic">Offre Limitée</h2>
-                <p className="text-xl md:text-2xl mb-10 tracking-wide">Profitez de -20% sur toute la collection Bijoux</p>
-                <div className="flex justify-center gap-8 mb-12">
+                <h2 className="text-3xl md:text-6xl font-serif mb-4 md:mb-6 italic">Offre Limitée</h2>
+                <p className="text-lg md:text-2xl mb-8 md:mb-10 tracking-wide">Profitez de -20% sur toute la collection Bijoux</p>
+                <div className="flex justify-center gap-4 md:gap-8 mb-10 md:mb-12">
                   <div className="text-center">
-                    <span className="text-4xl font-bold block">02</span>
-                    <span className="text-[10px] uppercase tracking-[0.2em]">Jours</span>
+                    <span className="text-3xl md:text-4xl font-bold block">02</span>
+                    <span className="text-[9px] md:text-[10px] uppercase tracking-[0.2em]">Jours</span>
                   </div>
                   <div className="text-center">
-                    <span className="text-4xl font-bold block">14</span>
-                    <span className="text-[10px] uppercase tracking-[0.2em]">Heures</span>
+                    <span className="text-3xl md:text-4xl font-bold block">14</span>
+                    <span className="text-[9px] md:text-[10px] uppercase tracking-[0.2em]">Heures</span>
                   </div>
                   <div className="text-center">
-                    <span className="text-4xl font-bold block">35</span>
-                    <span className="text-[10px] uppercase tracking-[0.2em]">Min</span>
+                    <span className="text-3xl md:text-4xl font-bold block">35</span>
+                    <span className="text-[9px] md:text-[10px] uppercase tracking-[0.2em]">Min</span>
                   </div>
                 </div>
-                <button onClick={() => setCurrentPage('shop')} className="btn-gold bg-white text-black hover:bg-gold hover:text-white">J'en profite</button>
+                <button onClick={() => setCurrentPage('shop')} className="btn-gold bg-white text-black hover:bg-gold hover:text-white w-full md:w-auto">J'en profite</button>
               </div>
             </section>
 
